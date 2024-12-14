@@ -7,7 +7,7 @@ body {
     display: flex;
     justify-content: flex-end; /* Alinha o conteúdo à direita */
     align-items: center;
-    height: 100vh;
+   
     font-family: "Anton", sans-serif;
     margin-right: 40px;
 
@@ -17,6 +17,7 @@ body {
   
     display: flex;
     flex-direction: column;
+    margin: 20px;
     gap: 20px; /* Espaçamento entre os itens */
     
     /* Perspectiva inicial e rotação */
@@ -29,8 +30,8 @@ body {
     letter-spacing: 10px;
     margin: 7px;
     font-size: 130px;
-height: 100px;
-width: 500;
+    height: 100px;
+    width: 500;
     color: rgb(24, 24, 24);
     cursor: pointer;
 
@@ -50,12 +51,6 @@ width: 500;
     transform-origin: center; /* Ponto de rotação centralizado */
     transition: transform 0.5s;
   }
-
-  h1:hover ~ .container {
-    /* Suave transformação ao passar o mouse no h1 */
-   
-  }
-
   .container div {
     color: black;
  

@@ -1,0 +1,210 @@
+/* ========================
+   1. Reset Geral
+======================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+/* ========================
+   2. Body - Estilos Principais
+======================== */
+body {
+    padding-top: 50px;
+    background-color: #3e3cb9; /* Fundo escuro profundo */
+    color: #f5f5f5; /* Texto claro suave */
+    font-family: 'Fira Code', 'Courier New', monospace; /* Fonte monoespaçada "techy" */
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ========================
+   3. Container e Layout
+======================== */
+.container-fluid {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    animation: glowFadeIn 2s ease-out;
+}
+
+/* ========================
+   4. Tipografia
+======================== */
+h2, h3, h4 {
+    color: #00eaff; /* Azul neon */
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(0, 234, 255, 0.8);
+    animation: slideIn 1.5s ease-out forwards;
+}
+
+p {
+    font-size: 1rem;
+    color: #cdd6f4; /* Cinza claro */
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+/* ========================
+   5. Links
+======================== */
+a {
+    color: #00eaff;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: #b4befe;
+    text-shadow: 0 0 8px rgba(0, 234, 255, 0.8);
+}
+
+/* ========================
+   6. Componentes Interativos
+======================== */
+
+/* Botões */
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #00eaff;
+    color: #0f0f17;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 234, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #b4befe;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 234, 255, 0.9);
+}
+
+/* Listas */
+ul {
+    padding: 0;
+}
+
+li {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    background: rgba(0, 255, 255, 0.05);
+    border-left: 4px solid #00eaff;
+    border-radius: 5px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+li:hover {
+    background: rgba(0, 255, 255, 0.1);
+    transform: translateX(10px);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+/* ========================
+   7. Imagens
+======================== */
+img.badge {
+    margin: 8px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 255, 255, 0.3);
+    transition: transform 0.3s ease;
+}
+
+img.badge:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 234, 255, 0.7);
+}
+
+img[alt="gif"] {
+    margin-bottom: 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 234, 255, 0.5);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+img[alt="gif"]:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(0, 234, 255, 0.9);
+}
+
+/* ========================
+   8. Animações Gerais
+======================== */
+div * {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1.2s ease-out forwards;
+}
+
+@keyframes glowFadeIn {
+    from {
+        opacity: 0;
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+    to {
+        opacity: 1;
+        text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================
+   9. Responsividade
+======================== */
+@media (max-width: 768px) {
+    h2, h3, h4 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    h2, h3, h4 {
+        font-size: 1.3rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    li {
+        font-size: 0.9rem;
+        padding: 8px 10px;
+    }
+}

@@ -39,6 +39,7 @@ body {
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: rgba(0, 0, 0, 0);
     transition: transform 1s, -webkit-text-stroke-width 0.5s;
+    transition: 0.3s;
   }
 
   h1:hover {
@@ -49,7 +50,7 @@ body {
     transform: scale(1); /* Um leve efeito de zoom */
     transform: scale(1) perspective(1000px) rotateY(12deg) rotateX(0deg);
     transform-origin: center; /* Ponto de rotação centralizado */
-    transition: transform 0.5s;
+    transition: transform 0.3s;
   }
   .container div {
     color: black;

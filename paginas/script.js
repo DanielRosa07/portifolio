@@ -1,25 +1,28 @@
-// Seleciona todos os elementos com a classe 'link' dentro da navbar
-const linkElements = document.querySelectorAll('.navbar .link');
+// Seleciona o link específico
+const link = document.querySelector('a.link');
 
-linkElements.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault(); // Impede a navegação imediata
+link.addEventListener('click', (e) => {
+    e.preventDefault(); // Impede a navegação imediata
 
-        // Oculta os outros links
-        linkElements.forEach(otherLink => {
-            if (otherLink !== link) {
-                otherLink.style.opacity = '0'; // Transição suave de saída
-                otherLink.style.transition = 'opacity 0.5s';
+    // Seleciona todos os elementos h1
+    const h1Elements = document.querySelectorAll('h1');
+
+    h1Elements.forEach(h1 => {
+        // Oculta os outros h1
+        h1Elements.forEach(otherH1 => {
+            if (otherH1 !== h1) {
+                otherH1.style.opacity = '0'; // Transição suave de saída
+                otherH1.style.transition = 'opacity 0.5s';
             }
         });
 
-        link.style.webkitTextStrokeWidth = '1px'; /* Aumenta a espessura */
-        link.style.webkitTextStrokeColor = 'rgb(255, 255, 255)'; /* Altera a cor do contorno */
-        link.style.color = 'rgb(24, 24, 24, 0)';
-        link.style.transition = 'transform 0.5s, color 0.5s'; /* Transições para transform e cor */
-        link.style.transform = 'scale(1.2)'; // Efeito de foco
-        link.style.marginRight = "300px"; // Modifica a margem direita
-        link.style.transition += ', margin-right 0.8s ease-out'; /* Transição separada para margin-right */
+        h1.style.webkitTextStrokeWidth = '1px'; /* Aumenta a espessura */
+        h1.style.webkitTextStrokeColor = 'rgb(255, 255, 255)'; /* Altera a cor do contorno */
+        h1.style.color = 'rgb(24, 24, 24, 0)';
+        h1.style.transition = 'transform 0.5s, color 0.5s'; /* Transições para transform e cor */
+        h1.style.transform = 'scale(1.2)'; // Efeito de foco
+        h1.style.marginRight = "300px"; // Modifica a margem direita
+        h1.style.transition += ', margin-right 0.8s ease-out'; /* Transição separada para margin-right */
 
         // Adiciona o efeito de transição estilo livro
         const pageTransition = document.createElement('div');
@@ -28,7 +31,7 @@ linkElements.forEach(link => {
         pageTransition.style.left = '0';
         pageTransition.style.width = '100%';
         pageTransition.style.height = '100%';
-        pageTransition.style.backgroundColor = '#3e3cb9';
+        pageTransition.style.backgroundColor = '#5451f8';
         pageTransition.style.zIndex = '1000';
         pageTransition.style.transformOrigin = 'left center';
         pageTransition.style.transform = 'scaleX(0)';

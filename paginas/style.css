@@ -7,6 +7,11 @@ body {
     display: grid;
     gap: 20px;
     padding: 20px;
+    
+}
+h3{
+    color: rgb(219, 219, 219);
+    
 }
 
 .box {
@@ -17,6 +22,7 @@ body {
     display: flex;
     opacity: 0;
     animation: fade-in 2s forwards; 
+    
 }
 
 .profile {
@@ -30,10 +36,14 @@ body {
 .icon {
     height: 299px;
     width: 299px;
-    border-radius: 100%;
-    background-color: #D9D9D9;
+    border-radius: 50%; 
+    border: 3px white solid;
+    object-fit: cover; 
+    object-position: top;
+    overflow: hidden; 
     opacity: 0; 
     animation: fade-in 2s 0.5s forwards; 
+    margin-left: 50px;
 }
 
 .iconx {
@@ -52,9 +62,10 @@ body {
     animation: fade-in 2s 0.5s forwards; 
 }
 
+
 .line {
     margin-top: 50px;
-    height: 500px;
+    height: 590px;
     width: 3px;
     background-color: white;
     opacity: 0; 
@@ -62,7 +73,11 @@ body {
 }
 
 
-
+.about-me{
+    margin: 50px;
+    opacity: 0; 
+    animation: fade-in 2s 0.5s forwards; 
+}
 
 
 
@@ -79,3 +94,25 @@ body {
         transform: translateY(0); /* Posição final */
     }
 }
+
+
+/* Estilo geral da barra de rolagem */
+::-webkit-scrollbar {
+    width: 12px; /* Largura da barra */
+    height: 12px; /* Altura da barra (para rolagem horizontal) */
+  }
+  
+  /* Estilo do "thumb" (parte que desliza) */
+  ::-webkit-scrollbar-thumb {
+    background-color: #00008b5b; /* Azul escuro */
+
+
+  }
+  
+  /* Estilo do fundo da barra de rolagem */
+  ::-webkit-scrollbar-track {
+    background-color: #3e3cb9; /* Azul claro */
+
+  }
+  
+  

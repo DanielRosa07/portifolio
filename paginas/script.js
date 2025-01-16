@@ -9,21 +9,7 @@ link.addEventListener('click', (e) => {
 
     h1Elements.forEach(h1 => {
         // Oculta os outros h1
-        h1Elements.forEach(otherH1 => {
-            if (otherH1 !== h1) {
-                otherH1.style.opacity = '0'; // Transição suave de saída
-                otherH1.style.transition = 'opacity 0.5s';
-            }
-        });
-
-        h1.style.webkitTextStrokeWidth = '1px'; /* Aumenta a espessura */
-        h1.style.webkitTextStrokeColor = 'rgb(255, 255, 255)'; /* Altera a cor do contorno */
-        h1.style.color = 'rgb(24, 24, 24, 0)';
-        h1.style.transition = 'transform 0.5s, color 0.5s'; /* Transições para transform e cor */
-        h1.style.transform = 'scale(1.2)'; // Efeito de foco
-        h1.style.marginRight = "300px"; // Modifica a margem direita
-        h1.style.transition += ', margin-right 0.8s ease-out'; /* Transição separada para margin-right */
-
+       
         // Adiciona o efeito de transição estilo livro
         const pageTransition = document.createElement('div');
         pageTransition.style.position = 'fixed';

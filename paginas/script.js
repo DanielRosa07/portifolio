@@ -35,3 +35,46 @@ link.addEventListener('click', (e) => {
         }, 1960);
     });
 });
+
+
+
+
+// habilidades script
+
+document.addEventListener("DOMContentLoaded", function () {
+    const boxes = document.querySelectorAll(".box");
+    const container = document.querySelector(".section1");
+
+    boxes.forEach((box, index) => {
+        if (index > 0) { // Começa a partir da segunda caixa para conectar com a anterior
+            const line = document.createElement("div");
+            line.classList.add("line");
+
+            // Obtém as posições das caixas
+            const prevBox = boxes[index - 1];
+            const prevRect = prevBox.getBoundingClientRect();
+            const currRect = box.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+
+            // Calcula posição da linha
+            const startX = prevRect.left + prevRect.width / 2 - containerRect.left;
+            const startY = prevRect.top + prevRect.height / 2 - containerRect.top;
+            const endX = currRect.left + currRect.width / 2 - containerRect.left;
+            const endY = currRect.top + currRect.height / 2 - containerRect.top;
+
+            // Calcula altura e ângulo da linha
+            const distance = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+            const angle = Math.atan2(endY - startY, endX - startX) * (180 / Math.PI);
+
+            // Estiliza a linha
+            line.style.height = distance + "px";
+            line.style.transform = `rotate(${angle}deg)`;
+            line.style.left = startX + "px";
+            line.style.top = startY + "px";
+
+            // Adiciona a linha ao container
+            container.appendChild(line);
+        }
+    });
+});
+

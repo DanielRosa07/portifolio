@@ -78,3 +78,15 @@ body {
   .container div:nth-child(4) {
     transform: scale(1.2, 1) skewX(0deg); /* Texto menos esticado na base */
   }
+
+  @keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.container{
+  animation: fadeIn 1s ease-out forwards;
+}

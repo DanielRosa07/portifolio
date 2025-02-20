@@ -231,3 +231,32 @@ document.addEventListener("DOMContentLoaded", function () {
         boxes.forEach(b => b.classList.remove("active"));
     });
 });
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const intro = document.getElementById('intro');
+    const titleScreen = document.getElementById('title-screen');
+    const crawlContainer = document.getElementById('crawl-container');
+
+    // Sequência de animações
+    setTimeout(() => {
+        intro.style.display = 'none'; // Esconde a introdução após 5 segundos
+    }, 5000);
+
+    setTimeout(() => {
+        titleScreen.style.display = 'none'; // Esconde o título após 10 segundos
+    }, 10000);
+
+    setTimeout(() => {
+        crawlContainer.style.display = 'block'; // Exibe o texto do crawl após 10 segundos
+    }, 10000);
+});
+
+
+

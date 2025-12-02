@@ -13,12 +13,27 @@ h3{
     color: rgb(219, 219, 219);
     
 }
+.item {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.486);
+    border-radius: 12px;
+    border: 2px solid white;
+    border-color:#302e96 ;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  
+}
+.item i {
+    font-size: 35px;
+}
 
 .box {
     border: 3px white solid;
     height: auto;
     width: auto;
-    border-radius: 15px;
+    border-radius: 12px;
     display: flex;
     opacity: 0;
     animation: fade-in 2s forwards; 
@@ -49,8 +64,8 @@ h3{
 .iconx {
     height: 59px;
     width: 59px;
-    border-radius: 100%;
-    background-color: #D9D9D9;
+    border-radius: 14px;
+    background-color: #3e3cb9; /* mesma cor do fundo */
     margin-left: 20px;
     opacity: 0; 
     animation: fade-in 2s 0.5s forwards; 
@@ -77,10 +92,22 @@ h3{
     margin: 50px;
     opacity: 0; 
     animation: fade-in 2s 0.5s forwards; 
+
 }
+.itens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
 
+}
+.coluna1 ,
+.coluna2,
+.coluna3 {
+    padding: 10px;
+    
 
-
+}
 
 
 /* Animação de neblina */
@@ -115,4 +142,41 @@ h3{
 
   }
   
-  
+  @media (max-width: 900px) {
+    .box {
+        flex-direction: column;        /* Fica em pé */
+        align-items: center;           /* Centraliza tudo */
+        
+    }
+
+    .profile {
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .icon {
+        margin-left: 0;                /* Remove recuo da foto */
+        margin-bottom: 20px;
+    }
+
+    .redes {
+        justify-content: center;
+        display: flex;
+        gap: 10px;
+        margin-left: 0;
+    }
+
+    .line {
+        display: none;                 /* Some com a linha vertical */
+    }
+
+    .about-me {
+        margin: 20px;
+        text-align: center;
+    }
+
+    .itens {
+        justify-content: center;       /* Ícones centralizados */
+    }
+}

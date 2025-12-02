@@ -275,3 +275,99 @@ body {
     transition: transform 0.3s ease-in-out;
 
 }
+
+/* REPOSNIVIDADE */
+
+/* ============================
+   📱 RESPONSIVIDADE
+   ============================ */
+
+@media (max-width: 900px) {
+
+    /* Impede o header quebrar */
+    .header {
+        height: 160px;
+        transform: rotate(-2deg);
+    }
+
+    .sub-header {
+        height: 130px;
+        top: -10px;
+    }
+
+    .sub-header a {
+        font-size: 32px;
+        margin-left: 20px;
+    }
+
+    .sub-header h1 {
+        font-size: 40px;
+        margin-left: 20px;
+    }
+
+    .p-container p {
+        font-size: 20px;
+    }
+
+    /* As 3 colunas de skills ficam uma abaixo da outra */
+    .caixas {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 40px; /* era 100px */
+    }
+
+    /* Cada coluna ocupa largura cheia */
+    .section1,
+    .section2,
+    .section3 {
+        width: 100%;
+        gap: 15px;
+    }
+
+    /* Agrupamentos ficam compactos */
+    .camada, .camada2 {
+        gap: 5px !important;
+        flex-wrap: wrap; /* evita quebra feia */
+    }
+
+    /* Hexágonos menores */
+    .box, .boxS {
+        width: 75px;
+        height: 75px;
+        font-size: 12px;
+        margin: 8px;
+    }
+
+    /* Permite rolagem no celular */
+    body {
+        overflow-y: auto !important;
+    }
+}
+@media (max-width: 768px) {
+    .caixas {
+        flex-wrap: wrap;        /* permite quebrar linha */
+        gap: 20px;              /* diminui o espaço */
+        width: 100%;
+        justify-content: center;
+    }
+
+    .section1, .section2, .section3 {
+        width: 100%;            /* cada bloco ocupa a tela inteira */
+        align-items: center;
+    }
+
+    .box, .boxS {
+        transform: scale(0.9);  /* diminui os hexágonos */
+        margin: 10px;
+    }
+
+    .camada, .camada2 {
+        flex-wrap: wrap;
+    }
+
+    .sub-header a {
+        font-size: 28px;
+        margin-left: 15px;
+    }
+}

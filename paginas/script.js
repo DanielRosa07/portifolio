@@ -260,3 +260,104 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    const section1 = document.querySelector(".section1");
+    const section2 = document.querySelector(".section2");
+    const section3 = document.querySelector(".section3");
+    const caixasContainer = document.querySelector(".caixas");
+    const pItems = document.querySelectorAll(".p-container p");
+
+    const svg = document.querySelector(".lines");
+
+    // ==============================
+    //  FUNÇÃO: limpa todas as linhas
+    // ==============================
+    function resetLines() {
+        svg.innerHTML = ""; // Remove todas as linhas antigas
+    }
+
+    // ===============================================
+    //  FUNÇÃO: redesenha linhas seguindo as .box visíveis
+    // ===============================================
+    function drawLines(section) {
+        resetLines();
+
+        const boxes = section.querySelectorAll(".box, .boxS");
+        if (boxes.length < 2) return;
+
+        boxes.forEach((box, index) => {
+            if (index === 0) return;
+
+            const prev = boxes[index - 1];
+            const curr = box;
+
+            const prevRect = prev.getBoundingClientRect();
+            const currRect = curr.getBoundingClientRect();
+
+            const svgRect = svg.getBoundingClientRect();
+
+            const startX = prevRect.left + prevRect.width / 2 - svgRect.left;
+            const startY = prevRect.top + prevRect.height / 2 - svgRect.top;
+            const endX = currRect.left + currRect.width / 2 - svgRect.left;
+            const endY = currRect.top + currRect.height / 2 - svgRect.top;
+
+            // Criando linhas (background + foreground)
+            const bg = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            bg.setAttribute("x1", startX);
+            bg.setAttribute("y1", startY);
+            bg.setAttribute("x2", endX);
+            bg.setAttribute("y2", endY);
+            bg.classList.add("line-background");
+
+            const fg = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            fg.setAttribute("x1", startX);
+            fg.setAttribute("y1", startY);
+            fg.setAttribute("x2", endX);
+            fg.setAttribute("y2", endY);
+            fg.classList.add("line-foreground");
+
+            svg.appendChild(bg);
+            svg.appendChild(fg);
+        });
+    }
+
+    // ==========================================================
+    //  FUNÇÃO: ativa uma section e troca ordem (modo mobile)
+    // ==========================================================
+    function activateSection(section) {
+        caixasContainer.innerHTML = ""; 
+        caixasContainer.appendChild(section);
+
+        drawLines(section);
+    }
+
+    // ================================================
+    //  MOBILE: troca automática da ordem das sections
+    // ================================================
+    if (window.innerWidth <= 900) {
+        activateSection(section1);
+    }
+
+    // =======================================================
+    //  CLICOU NO p-container → troca a section correspondente
+    // =======================================================
+    pItems.forEach((p, index) => {
+        p.style.cursor = "pointer";
+
+        p.addEventListener("click", () => {
+            if (index === 0) activateSection(section1);
+            if (index === 1) activateSection(section2);
+            if (index === 2) activateSection(section3);
+        });
+    });
+
+    // ===================================================
+    //  Recalcular linhas ao dar resize (muda orientação)
+    // ===================================================
+    window.addEventListener("resize", () => {
+        const activeSection = caixasContainer.children[0];
+        if (activeSection) {
+            drawLines(activeSection);
+        }
+    });
+});

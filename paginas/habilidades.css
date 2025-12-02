@@ -256,7 +256,7 @@ body {
 }
 
 /* 🔹 Botão de Fechar */
-.close-bar {
+/* .close-bar {
     position: absolute;
     right: 20px;
     top: 50%;
@@ -266,7 +266,7 @@ body {
     border-radius: 10px;
     cursor: pointer;
     font-weight: bold;
-}
+} */
 
 /* 🔹 Destaca a Caixa Selecionada */
 .box.active {
@@ -378,9 +378,7 @@ body {
         padding: 0 5px;
     }
 
-    .close-bar {
-        padding: 5px 10px;
-    }
+    
 }
 @media (max-width: 768px) {
     .caixas {

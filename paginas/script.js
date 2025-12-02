@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const infoBar = document.getElementById("info-bar");
     const infoTitle = document.getElementById("info-title");
     const infoText = document.getElementById("info-text");
-    const closeBar = document.querySelector(".close-bar");
+    // const closeBar = document.querySelector(".close-bar");
 
     // 🔹 Descrições Personalizadas
     const descriptions = {

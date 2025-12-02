@@ -30,6 +30,25 @@ h1{
     font-size: 70px;
     padding: 10px;
 }
+
+/* Estilo geral da barra de rolagem */
+::-webkit-scrollbar {
+    width: 12px; /* Largura da barra */
+    height: 12px; /* Altura da barra (para rolagem horizontal) */
+  }
+  
+  /* Estilo do "thumb" (parte que desliza) */
+  ::-webkit-scrollbar-thumb {
+    background-color: #00008b5b; /* Azul escuro */
+
+
+  }
+  
+  /* Estilo do fundo da barra de rolagem */
+  ::-webkit-scrollbar-track {
+    background-color: #3e3cb9; /* Azul claro */
+
+  }
 /* Container principal */
 .container {
     display: flex;

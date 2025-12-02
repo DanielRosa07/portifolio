@@ -362,8 +362,24 @@ body {
         overflow-y: auto !important;
     }
 
+    #info-bar {
+        padding: 10px 15px;
+        min-height: 80px;
+    }
+
+    #info-title {
+        font-size: 18px;
+    }
     #info-text{
         font-size: 16px;
+    }
+    #info-description {
+        font-size: 14px;
+        padding: 0 5px;
+    }
+
+    .close-bar {
+        padding: 5px 10px;
     }
 }
 @media (max-width: 768px) {

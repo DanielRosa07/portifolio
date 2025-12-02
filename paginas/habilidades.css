@@ -284,6 +284,13 @@ body {
 
 @media (max-width: 900px) {
 
+
+   @keyframes pulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.04); }
+    100% { transform: scale(1); }
+}
+
     /* Impede o header quebrar */
     .header {
         height: 160px;
@@ -297,16 +304,25 @@ body {
 
     .sub-header a {
         font-size: 32px;
-        margin-left: 20px;
+        margin-left: 10px;
     }
 
     .sub-header h1 {
-        font-size: 40px;
+        font-size: 38px;
         margin-left: 20px;
     }
 
     .p-container p {
         font-size: 20px;
+         border-bottom: 1px solid white;
+         cursor: pointer;
+         animation: pulse 1.5s infinite ease-in-out;
+    }
+    /* Quando um título está ativo */
+    .p-container p.active-tab {
+    transform: scale(1.15);
+    border-bottom: 2px solid white;
+    animation: none;
     }
 
     /* As 3 colunas de skills ficam uma abaixo da outra */
@@ -323,8 +339,10 @@ body {
     .section3 {
         width: 100%;
         gap: 15px;
+    
     }
 
+   
     /* Agrupamentos ficam compactos */
     .camada, .camada2 {
         gap: 5px !important;
@@ -356,7 +374,7 @@ body {
         width: 100%;            /* cada bloco ocupa a tela inteira */
         align-items: center;
     }
-
+    
     .box, .boxS {
         transform: scale(0.9);  /* diminui os hexágonos */
         margin: 10px;
@@ -368,6 +386,10 @@ body {
 
     .sub-header a {
         font-size: 28px;
-        margin-left: 15px;
+        margin-left: 25px;
+    }
+    .sub-header h1 {
+        font-size: 34px;
+      
     }
 }

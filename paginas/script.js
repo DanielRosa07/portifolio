@@ -259,26 +259,26 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
 document.addEventListener("DOMContentLoaded", function () {
     const section1 = document.querySelector(".section1");
     const section2 = document.querySelector(".section2");
     const section3 = document.querySelector(".section3");
     const caixasContainer = document.querySelector(".caixas");
     const pItems = document.querySelectorAll(".p-container p");
-
     const svg = document.querySelector(".lines");
 
+    let mobileMode = false; // controla se o modo mobile está ativo
+
     // ==============================
-    //  FUNÇÃO: limpa todas as linhas
+    //  LIMPA TODAS AS LINHAS
     // ==============================
     function resetLines() {
-        svg.innerHTML = ""; // Remove todas as linhas antigas
+        svg.innerHTML = "";
     }
 
-    // ===============================================
-    //  FUNÇÃO: redesenha linhas seguindo as .box visíveis
-    // ===============================================
+    // ==========================================
+    //  DESENHA LINHAS PARA A SECTION ATIVA
+    // ==========================================
     function drawLines(section) {
         resetLines();
 
@@ -293,7 +293,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const prevRect = prev.getBoundingClientRect();
             const currRect = curr.getBoundingClientRect();
-
             const svgRect = svg.getBoundingClientRect();
 
             const startX = prevRect.left + prevRect.width / 2 - svgRect.left;
@@ -301,7 +300,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const endX = currRect.left + currRect.width / 2 - svgRect.left;
             const endY = currRect.top + currRect.height / 2 - svgRect.top;
 
-            // Criando linhas (background + foreground)
             const bg = document.createElementNS("http://www.w3.org/2000/svg", "line");
             bg.setAttribute("x1", startX);
             bg.setAttribute("y1", startY);
@@ -321,43 +319,73 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ==========================================================
-    //  FUNÇÃO: ativa uma section e troca ordem (modo mobile)
-    // ==========================================================
+    // =====================================================
+    //  ATIVA SECTION — APENAS NO MOBILE
+    // =====================================================
     function activateSection(section) {
-        caixasContainer.innerHTML = ""; 
+        if (!mobileMode) return; // se não estiver no mobile, não faz nada
+
+        caixasContainer.innerHTML = "";
         caixasContainer.appendChild(section);
 
         drawLines(section);
     }
 
-    // ================================================
-    //  MOBILE: troca automática da ordem das sections
-    // ================================================
-    if (window.innerWidth <= 900) {
-        activateSection(section1);
+    // =====================================================
+    //  LIGA/DESLIGA MODO MOBILE
+    // =====================================================
+    function checkMode() {
+        const isNowMobile = window.innerWidth <= 900;
+
+        if (isNowMobile && !mobileMode) {
+            // ativando modo mobile
+            mobileMode = true;
+            activateSection(section1);
+        } 
+        else if (!isNowMobile && mobileMode) {
+            // desativando modo mobile
+            mobileMode = false;
+
+            // restaura layout normal
+            caixasContainer.innerHTML = "";
+            caixasContainer.appendChild(section1);
+            caixasContainer.appendChild(section2);
+            caixasContainer.appendChild(section3);
+
+            resetLines(); // importante: remove linhas adaptadas ao mobile
+        }
     }
 
-    // =======================================================
-    //  CLICOU NO p-container → troca a section correspondente
-    // =======================================================
-    pItems.forEach((p, index) => {
-        p.style.cursor = "pointer";
+    // inicia no estado correto
+    checkMode();
 
-        p.addEventListener("click", () => {
-            if (index === 0) activateSection(section1);
-            if (index === 1) activateSection(section2);
-            if (index === 2) activateSection(section3);
-        });
+    // troca a section quando clicar nos títulos somente no mobile
+   pItems.forEach((p, index) => {
+    p.style.cursor = "pointer";
+
+    p.addEventListener("click", () => {
+        if (!mobileMode) return;
+
+        // remove destaque de todos
+        pItems.forEach(item => item.classList.remove("active-tab"));
+
+        // adiciona destaque ao selecionado
+        p.classList.add("active-tab");
+
+        // troca section
+        if (index === 0) activateSection(section1);
+        if (index === 1) activateSection(section2);
+        if (index === 2) activateSection(section3);
     });
+});
 
-    // ===================================================
-    //  Recalcular linhas ao dar resize (muda orientação)
-    // ===================================================
+    // recalcula ao redimensionar
     window.addEventListener("resize", () => {
-        const activeSection = caixasContainer.children[0];
-        if (activeSection) {
-            drawLines(activeSection);
+        checkMode();
+
+        if (mobileMode) {
+            const active = caixasContainer.children[0];
+            drawLines(active);
         }
     });
 });

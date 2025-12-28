@@ -389,3 +389,35 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+// projeto script
+
+
+
+
+
+const projetos = document.querySelectorAll('.projeto');
+
+projetos.forEach(projeto => {
+  projeto.addEventListener('click', () => {
+
+    projetos.forEach(p => {
+      p.classList.remove('ativo');
+      p.classList.add('escondido');
+    });
+
+    projeto.classList.remove('escondido');
+    projeto.classList.add('ativo');
+  });
+});

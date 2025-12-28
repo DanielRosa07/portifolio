@@ -1,146 +1,227 @@
-/* Estilização do link fixo à esquerda */
-a.link {
-    position: fixed;
-    top: 20px; /* Distância do topo da página */
-    left: 20px; /* Distância da esquerda da página */
-    font-size: 59px;
-    color: white;
-    text-decoration: none;
-    z-index: 10; /* Garante que o link fique acima de outros elementos */
-}
-
-/* Reset básico */
+/* projetos.css */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Estilização do body */
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #3e3cb9; /* Fundo roxo */
+    background-color: #3f3fbf;
+    font-family: Arial, sans-serif;
+    color: #000;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Voltar */
+.link-voltar {
+    font-size: 28px;
     color: white;
+    text-decoration: none;
+    margin-bottom: 20px;
+    display: inline-block;
+    padding: 10px 20px;
+}
+
+.container-projetos {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px;
+    gap: 30px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
 }
-h1{
-    font-size: 70px;
-    padding: 10px;
+
+.titulo {
+    color: white;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
-/* Estilo geral da barra de rolagem */
-::-webkit-scrollbar {
-    width: 12px; /* Largura da barra */
-    height: 12px; /* Altura da barra (para rolagem horizontal) */
-  }
-  
-  /* Estilo do "thumb" (parte que desliza) */
-  ::-webkit-scrollbar-thumb {
-    background-color: #00008b5b; /* Azul escuro */
-
-
-  }
-  
-  /* Estilo do fundo da barra de rolagem */
-  ::-webkit-scrollbar-track {
-    background-color: #3e3cb9; /* Azul claro */
-
-  }
-/* Container principal */
-.container {
+.caixa-projetos {
+    width: 100%;
     display: flex;
-    width: 90%;
-    max-width: 1100px; /* Aumentei a largura máxima */
-    background-color: white;
-    margin-bottom: 30px;
-    border-radius: 12px;
+    gap: 20px;
+}
+
+.imagem-container {
+    width: 100%;
     overflow: hidden;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Adiciona um leve sombreamento */
 }
 
-/* Seção da imagem */
-.img-section {
-    width: 50%;
-    background-color: #f4f4f4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 300px; /* Aumentei a altura mínima */
-}
-
-.img-section img {
+.projeto img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Mantém a imagem ajustada sem distorcer */
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
 }
 
-/* Seção do conteúdo */
-.content-section {
-    width: 50%;
-    background-color: #D3D3D3; /* Cinza claro */
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-/* Estilização do título */
-.title {
-    font-size: 24px; /* Aumentei o tamanho da fonte */
+.caixa-texto {
+    background-color: #444;
     color: white;
-    background-color: black;
-    width: 100%;
-    padding: 8px;
-    text-align: center;
-    border-radius: 5px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    max-height: 0;
+    opacity: 0;
 }
 
-/* Barra preta abaixo do título */
-.bar {
-    width: 100%;
-    height: 6px;
-    background-color: rgba(0, 0, 0, 0);
-    margin: 12px 0;
+.caixa-texto h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    padding: 0 20px;
+    padding-top: 20px;
 }
 
-/* Caixa de texto */
-.text-box {
-    width: 100%;
-    min-height: 100px; /* Aumentei a altura mínima */
-    background-color: black;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px; /* Aumentei o tamanho da fonte */
-    padding: 15px;
-    text-align: center;
-    border-radius: 5px;
-    word-wrap: break-word; /* Permite que palavras longas quebrem linha */
+.caixa-texto p {
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0 20px;
+    padding-bottom: 20px;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column; /* Empilha os itens em telas menores */
-        width: 95%;
+/* ====== DESKTOP (acordeão horizontal) ====== */
+@media (min-width: 1024px) {
+    .caixa-projetos {
+        height: 550px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
     }
-
-    .img-section, .content-section {
+    
+    /* Estado normal - todos visíveis lado a lado */
+    .projeto {
+        width: 140px;
+        height: 500px;
+        border-radius: 15px;
+        background-color: #D9D9D9;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        display: flex;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+    
+    .projeto img {
+        border-radius: 15px;
+        min-width: 140px;
+    }
+    
+    .caixa-texto {
+        width: 0;
+        min-width: 0;
+        border-radius: 0 15px 15px 0;
+    }
+    
+    /* Estado ativo - projeto expandido */
+    .projeto.ativo {
         width: 100%;
+        max-width: 1200px;
     }
-
-    .img-section {
-        min-height: 250px; /* Ajustei a altura mínima para telas menores */
+    
+    .projeto.ativo img {
+        width: 60%;
+        border-radius: 15px 0 0 15px;
     }
+    
+    .projeto.ativo .caixa-texto {
+        width: 40%;
+        max-height: none;
+        opacity: 1;
+        min-width: 300px;
+    }
+    
+    /* Esconde os outros projetos no desktop */
+    .caixa-projetos:has(.projeto.ativo) .projeto:not(.ativo) {
+        opacity: 0;
+        width: 0;
+        margin: 0;
+        pointer-events: none;
+    }
+    
+    /* Efeito hover apenas no desktop */
+    .projeto:not(.ativo):hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+}
 
-    .text-box {
-        min-height: 80px;
-        font-size: 16px;
+/* ====== MOBILE (coluna vertical) ====== */
+@media (max-width: 1023px) {
+    .container-projetos {
+        padding: 10px;
+    }
+    
+    .link-voltar {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+    
+    .titulo {
+        font-size: 2rem;
+    }
+    
+    .caixa-projetos {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+    
+    /* Cada projeto ocupa toda largura */
+    .projeto {
+        width: 100%;
+        max-width: 500px;
+        background-color: #D9D9D9;
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .projeto img {
+        width: 100%;
+        height: 250px;
+        border-radius: 10px 10px 0 0;
+    }
+    
+    .caixa-texto {
+        width: 100%;
+        border-radius: 0 0 10px 10px;
+    }
+    
+    /* Estado ativo no mobile - texto aparece abaixo */
+    .projeto.ativo .caixa-texto {
+        max-height: 500px;
+        opacity: 1;
+    }
+    
+    /* Mantém todos visíveis no mobile */
+    .caixa-projetos:has(.projeto.ativo) .projeto:not(.ativo) {
+        opacity: 1;
+        pointer-events: auto;
+        transform: none;
+    }
+    
+    /* Efeito ao clicar no mobile */
+    .projeto:active {
+        transform: scale(0.98);
+    }
+    
+    .projeto.ativo {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Tablet - ajuste intermediário */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .projeto {
+        max-width: 700px;
+    }
+    
+    .projeto img {
+        height: 300px;
     }
 }

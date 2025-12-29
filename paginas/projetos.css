@@ -82,6 +82,20 @@ body {
     padding: 0 20px;
     padding-bottom: 20px;
 }
+/* Link dentro da descrição do projeto */
+.link-projeto {
+    color: #8fa8ff; /* azul claro que combina com o fundo */
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.link-projeto:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(143, 168, 255, 0.8);
+    text-decoration: underline;
+}
+
 
 /* ====== DESKTOP (acordeão horizontal) ====== */
 @media (min-width: 1024px) {

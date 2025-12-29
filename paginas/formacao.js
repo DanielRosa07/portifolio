@@ -6,214 +6,251 @@ const crawlText = document.getElementById('crawl-text');
 const finalDownloadBtn = document.getElementById('final-download-btn');
 const skipBtn = document.getElementById('skip-btn');
 const replayBtn = document.getElementById('replay-btn');
-const backBtn = document.querySelector('a.btn[href="../index.html"]');
+const speedBtn = document.getElementById('speed-btn');
 
-// Função para ajustar o início da animação baseado no tamanho da tela
-function adjustCrawlStart() {
-    const screenHeight = window.innerHeight;
-    const crawl = document.getElementById('crawl-text');
+// Controle MANUAL da animação (como um vídeo)
+let isAnimating = false;
+let animationStartTime = 0;
+let elapsedTimeBeforePause = 0;
+let currentSpeed = 1; // 1x, 2x, 4x
+let animationFrameId = null;
+let totalAnimationTime = 80; // 80 segundos total
+let clickCount = 0;
+
+// Altura total que o texto vai percorrer (calculada dinamicamente)
+let totalScrollHeight = 0;
+
+// Configurações da animação
+const START_POSITION = 100; // Começa 100vh abaixo
+const END_POSITION = -200; // Termina 200vh acima
+const BASE_DURATION = 80; // 80 segundos em 1x
+
+// Inicializar sistema
+function initAnimationSystem() {
+    // Calcular altura total baseada no conteúdo
+    const contentHeight = crawlText.scrollHeight;
+    const viewportHeight = window.innerHeight;
+    totalScrollHeight = contentHeight + viewportHeight * 2;
     
-    // Ajustar o padding-top baseado na altura da tela
-    if (screenHeight < 400) {
-        crawl.style.paddingTop = '120vh'; // Mais alto para telas pequenas
-    } else if (screenHeight < 576) {
-        crawl.style.paddingTop = '130vh';
-    } else if (screenHeight < 768) {
-        crawl.style.paddingTop = '140vh';
-    } else if (screenHeight < 992) {
-        crawl.style.paddingTop = '150vh';
+    // Resetar posição inicial
+    crawlText.style.transform = `translateY(${START_POSITION}vh) rotateX(35deg)`;
+    crawlText.style.animation = 'none'; // Remover animação CSS
+}
+
+// Função principal de animação (como um game loop)
+function animateText(currentTime) {
+    if (!isAnimating) return;
+    
+    // Calcular tempo decorrido considerando velocidade
+    const elapsed = (currentTime - animationStartTime) / 1000; // em segundos
+    const effectiveElapsed = elapsed * currentSpeed + elapsedTimeBeforePause;
+    
+    // Calcular progresso (0 a 1)
+    const progress = Math.min(effectiveElapsed / totalAnimationTime, 1);
+    
+    // Calcular posição Y baseada no progresso
+    const positionY = START_POSITION - (progress * (START_POSITION - END_POSITION));
+    
+    // Aplicar transformação
+    crawlText.style.transform = `translateY(${positionY}vh) rotateX(35deg)`;
+    
+    // Verificar se terminou
+    if (progress >= 1) {
+        isAnimating = false;
+        cancelAnimationFrame(animationFrameId);
+        showDownloadButton();
+        return;
+    }
+    
+    // Continuar animação
+    animationFrameId = requestAnimationFrame(animateText);
+}
+
+// Iniciar animação
+function startAnimation() {
+    if (isAnimating) return;
+    
+    isAnimating = true;
+    animationStartTime = performance.now() - (elapsedTimeBeforePause * 1000 / currentSpeed);
+    animationFrameId = requestAnimationFrame(animateText);
+}
+
+// Pausar animação (para quando mudar velocidade)
+function pauseAnimation() {
+    if (!isAnimating) return;
+    
+    // Calcular tempo decorrido até agora
+    const currentTime = performance.now();
+    const elapsed = (currentTime - animationStartTime) / 1000;
+    elapsedTimeBeforePause += elapsed * currentSpeed;
+    
+    isAnimating = false;
+    if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+    }
+}
+
+// Mudar velocidade MANTENDO A POSIÇÃO ATUAL
+function changeSpeed() {
+    if (!isAnimating && elapsedTimeBeforePause === 0) return;
+    
+    // Pausar para calcular nova posição
+    const wasPlaying = isAnimating;
+    if (wasPlaying) pauseAnimation();
+    
+    // Ciclo de velocidades: 1x → 2x → 4x → 1x
+    clickCount++;
+    if (clickCount === 1) {
+        currentSpeed = 2;
+        speedBtn.innerHTML = '<i class="fas fa-forward"></i> 2x';
+        speedBtn.classList.add('speed-2x');
+    } else if (clickCount === 2) {
+        currentSpeed = 4;
+        speedBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i> 4x';
+        speedBtn.classList.remove('speed-2x');
+        speedBtn.classList.add('speed-4x');
     } else {
-        crawl.style.paddingTop = '160vh'; // MUITO alto para desktop
+        clickCount = 0;
+        currentSpeed = 1;
+        speedBtn.innerHTML = '<i class="fas fa-forward"></i> 1x';
+        speedBtn.classList.remove('speed-2x', 'speed-4x');
     }
     
-    // Ajustar também a velocidade baseado na altura
-    const baseTime = 80; // 80 segundos total (mais lento)
-    crawl.style.animationDuration = baseTime + 's';
-}
-
-// Ajustar inicialmente e quando a janela for redimensionada
-window.addEventListener('DOMContentLoaded', adjustCrawlStart);
-window.addEventListener('resize', adjustCrawlStart);
-
-// Bloqueio total de scroll
-document.body.style.overflow = 'hidden';
-
-// Prevenir qualquer tipo de scroll
-document.addEventListener('wheel', preventScroll, { passive: false });
-document.addEventListener('touchmove', preventScroll, { passive: false });
-document.addEventListener('keydown', preventScrollKeys);
-
-function preventScroll(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-}
-
-function preventScrollKeys(e) {
-    const keys = ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', ' '];
-    if (keys.includes(e.key)) {
-        e.preventDefault();
+    // Feedback visual
+    speedBtn.style.transform = 'scale(1.1)';
+    setTimeout(() => speedBtn.style.transform = 'scale(1)', 200);
+    
+    // Se estava rodando, continuar com nova velocidade
+    if (wasPlaying) {
+        setTimeout(() => startAnimation(), 10);
     }
 }
 
-// Verificar se o arquivo PDF existe
-function checkPDFExists() {
-    fetch('CV-DANIEL-ROSA-SILVA.pdf')
-        .then(response => {
-            if (!response.ok) {
-                console.warn('PDF não encontrado. Verifique se o arquivo existe.');
-                // Opcional: mostrar um alerta ou mudar o botão
-                
-                finalDownloadBtn.title = 'Arquivo PDF não encontrado. Verifique o nome do arquivo.';
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao verificar PDF:', error);
-        });
+// Mostrar botão de download
+function showDownloadButton() {
+    finalDownloadBtn.style.display = 'flex';
 }
 
-// Inicialização
-window.addEventListener('DOMContentLoaded', () => {
-    // Ajustar a posição inicial
-    adjustCrawlStart();
+// Iniciar sequência completa
+function startSequence() {
+    // Resetar tudo
+    isAnimating = false;
+    clickCount = 0;
+    currentSpeed = 1;
+    animationStartTime = 0;
+    elapsedTimeBeforePause = 0;
     
-    // Verificar se o PDF existe
-    checkPDFExists();
+    if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+    }
     
-    // Mostrar botão de download quando a animação terminar
-    setTimeout(() => {
-        finalDownloadBtn.style.display = 'flex';
-    }, 92000); // 80s de animação + 12s de espera
-});
-
-// Pular introdução
-skipBtn.addEventListener('click', () => {
-    // Esconder introdução e título
-    intro.style.display = 'none';
-    titleScreen.style.display = 'none';
-    
-    // Mostrar conteúdo principal imediatamente
-    crawlContainer.style.opacity = '1';
-    crawlContainer.style.animation = 'none';
-    
-    // Ajustar posição inicial antes de começar
-    adjustCrawlStart();
-    
-    // Parar qualquer animação atual e começar a rolagem
-    crawlText.style.animation = 'none';
-    setTimeout(() => {
-        crawlText.style.animation = 'crawlAnimation 80s linear forwards';
-    }, 10);
-    
-    // Mostrar botão de download mais cedo
-    setTimeout(() => {
-        finalDownloadBtn.style.display = 'flex';
-    }, 80000);
-});
-
-// Repetir animação
-replayBtn.addEventListener('click', () => {
-    // Esconder botão de download
+    // Resetar UI
+    speedBtn.innerHTML = '<i class="fas fa-forward"></i> 1x';
+    speedBtn.classList.remove('speed-2x', 'speed-4x');
     finalDownloadBtn.style.display = 'none';
     
-    // Mostrar introdução e título novamente
+    // Resetar e mostrar elementos
     intro.style.display = 'block';
     titleScreen.style.display = 'block';
+    crawlContainer.style.opacity = '0';
     
-    // Resetar animações
+    // Resetar animações CSS
     intro.style.animation = 'none';
     titleScreen.style.animation = 'none';
     crawlContainer.style.animation = 'none';
     crawlText.style.animation = 'none';
     
-    // Forçar reflow
     void intro.offsetWidth;
     void titleScreen.offsetWidth;
     void crawlContainer.offsetWidth;
-    void crawlText.offsetWidth;
     
-    // Ajustar posição inicial
-    adjustCrawlStart();
+    // Configurar texto
+    initAnimationSystem();
     
-    // Reiniciar animações EXATAMENTE como no código original
+    // Animações CSS sequenciais
     intro.style.animation = 'introAnimation 5s ease-out';
     titleScreen.style.animation = 'titleAnimation 5s ease-out 5s';
     crawlContainer.style.animation = 'crawlFadeIn 5s ease-out 10s forwards';
     
+    // Iniciar animação manual após delay
     setTimeout(() => {
-        crawlText.style.animation = 'crawlAnimation 80s linear 12s forwards';
-    }, 10);
+        elapsedTimeBeforePause = 0;
+        startAnimation();
+    }, 12000);
+}
+
+// Pular introdução
+skipBtn.addEventListener('click', () => {
+    intro.style.display = 'none';
+    titleScreen.style.display = 'none';
+    crawlContainer.style.opacity = '1';
+    crawlContainer.style.animation = 'none';
     
-    // Mostrar botão de download no final
-    setTimeout(() => {
-        finalDownloadBtn.style.display = 'flex';
-    }, 92000);
+    // Resetar e iniciar imediatamente
+    elapsedTimeBeforePause = 0;
+    initAnimationSystem();
+    startAnimation();
 });
 
-// Feedback visual no botão de download do PDF
+// Event Listeners
+speedBtn.addEventListener('click', changeSpeed);
+replayBtn.addEventListener('click', startSequence);
+
 finalDownloadBtn.addEventListener('click', (e) => {
-    e.preventDefault(); // Prevenir comportamento padrão do link
-    
-    // Tentar fazer download do arquivo
-    const fileUrl = 'CV-DANIEL-ROSA-SILVA.pdf'; // Nome do arquivo
-    const fileName = 'CV_Daniel_Rosa_Silva.pdf'; // Nome que vai aparecer no download
-    
-    // Feedback visual no botão
     const originalHTML = finalDownloadBtn.innerHTML;
-    finalDownloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparando...';
-    finalDownloadBtn.style.backgroundColor = '#2196F3';
-    finalDownloadBtn.style.animation = 'none';
+    finalDownloadBtn.innerHTML = '<i class="fas fa-check"></i> Baixando...';
+    finalDownloadBtn.style.backgroundColor = '#4CAF50';
+    finalDownloadBtn.style.color = '#000';
     
-    // Verificar se o arquivo existe primeiro
-    fetch(fileUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Arquivo não encontrado');
-            }
-            return response.blob();
-        })
-        .then(blob => {
-            // Criar link de download
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = fileName;
-            
-            // Adicionar ao documento, clicar e remover
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-            
-            // Feedback de sucesso
-            finalDownloadBtn.innerHTML = '<i class="fas fa-check"></i> Download Iniciado!';
-            finalDownloadBtn.style.backgroundColor = '#4CAF50';
-            
-            // Resetar após 3 segundos
-            setTimeout(() => {
-                finalDownloadBtn.innerHTML = originalHTML;
-                finalDownloadBtn.style.backgroundColor = '';
-                finalDownloadBtn.style.animation = 'pulse 2s infinite';
-            }, 3000);
-        })
-        .catch(error => {
-            console.error('Erro ao baixar:', error);
-            
-            // Feedback de erro
-            finalDownloadBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Arquivo não encontrado';
-            finalDownloadBtn.style.backgroundColor = '#f44336';
-            
-            // Tentar abrir em nova aba como fallback
-            setTimeout(() => {
-                window.open(fileUrl, '_blank');
-                finalDownloadBtn.innerHTML = '<i class="fas fa-external-link-alt"></i> Abrir em nova aba';
-            }, 1000);
-            
-            // Resetar após 5 segundos
-            setTimeout(() => {
-                finalDownloadBtn.innerHTML = originalHTML;
-                finalDownloadBtn.style.backgroundColor = '';
-                finalDownloadBtn.style.animation = 'pulse 2s infinite';
-            }, 5000);
-        });
+    setTimeout(() => {
+        finalDownloadBtn.innerHTML = originalHTML;
+        finalDownloadBtn.style.backgroundColor = '';
+        finalDownloadBtn.style.color = '';
+    }, 2000);
+});
+
+// Prevenir scroll
+document.body.style.overflow = 'hidden';
+document.addEventListener('wheel', e => e.preventDefault(), { passive: false });
+document.addEventListener('touchmove', e => {
+    if (e.touches.length > 1) e.preventDefault();
+}, { passive: false });
+
+// Tecla 'V' para velocidade
+document.addEventListener('keydown', (e) => {
+    if (e.key.toLowerCase() === 'v') {
+        e.preventDefault();
+        changeSpeed();
+    }
+});
+
+// Tecla espaço para pausar/continuar (extra)
+document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+        e.preventDefault();
+        if (isAnimating) {
+            pauseAnimation();
+        } else if (elapsedTimeBeforePause > 0) {
+            startAnimation();
+        }
+    }
+});
+
+// Inicializar quando a página carregar
+window.addEventListener('DOMContentLoaded', () => {
+    initAnimationSystem();
+    startSequence();
+});
+
+// Ajustar quando redimensionar
+window.addEventListener('resize', () => {
+    initAnimationSystem();
+    // Se estiver animando, continuar da mesma posição
+    if (isAnimating || elapsedTimeBeforePause > 0) {
+        const progress = elapsedTimeBeforePause / totalAnimationTime;
+        const positionY = START_POSITION - (progress * (START_POSITION - END_POSITION));
+        crawlText.style.transform = `translateY(${positionY}vh) rotateX(35deg)`;
+    }
 });

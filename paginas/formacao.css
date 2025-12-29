@@ -1,114 +1,369 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+ * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: black;
-    color: yellow;
-    overflow: hidden;
-    height: 100vh;
-    perspective: 600px; /* Aprofunda a perspectiva */
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            color: #ffe81f;
+            overflow: hidden;
+            height: 100vh;
+            perspective: 600px;
+            user-select: none;
+        }
 
-.stars {
-    position: fixed;
-    width: 100%;
-    height: 1200%;
-    background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
-    animation: starsAnimation 50s linear infinite;
-}
+        /* Botões de controle */
+        .controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-@keyframes starsAnimation {
-    from { background-position: 0 0; }
-    to { background-position: 1000px 1000px; }
-}
+        .btn {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #ffe81f;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+        }
 
-.fade {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, black 0%, rgba(0, 0, 0, 0) 50%);
-}
+        .btn:hover {
+            background-color: #ffe81f;
+            color: #000;
+            transform: scale(1.05);
+        }
 
-.intro-text {
-    color: aqua;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2.5rem;
-    text-align: center;
-    opacity: 0;
-    animation: introAnimation 5s ease-out;
-}
+        .btn-download {
+            background-color: rgba(0, 50, 0, 0.8);
+            color: #4CAF50;
+        }
 
-@keyframes introAnimation {
-    0% { opacity: 0; }
-    20% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 0; }
-}
+        .btn-download:hover {
+            background-color: #4CAF50;
+            color: #000;
+        }
 
-.title-screen {
-    
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 3rem;
-    text-align: center;
-    opacity: 0;
-    animation: titleAnimation 5s ease-out 5s;
-}
+        /* Estrelas de fundo */
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 1200%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+            animation: starsAnimation 50s linear infinite;
+        }
 
-@keyframes titleAnimation {
-    0% { opacity: 0; }
-    20% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 0; }
-}
+        @keyframes starsAnimation {
+            from { background-position: 0 0; }
+            to { background-position: 1000px 1000px; }
+        }
 
-.star-wars {
-    margin-top: 150vh;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    opacity: 0;
-    animation: crawlFadeIn 5s ease-out 10s forwards; /* Aparece após o título sumir */
-}
+        .fade {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                rgba(0, 0, 0, 1) 0%, 
+                rgba(0, 0, 0, 0.8) 20%, 
+                rgba(0, 0, 0, 0) 40%, 
+                rgba(0, 0, 0, 0) 70%, 
+                rgba(0, 0, 0, 0.8) 85%, 
+                rgba(0, 0, 0, 1) 100%);
+            z-index: 1;
+        }
 
-@keyframes crawlFadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
+        /* Texto de introdução */
+        .intro-text {
+            color: #4bd5ee;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            text-align: center;
+            opacity: 0;
+            animation: introAnimation 5s ease-out;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            z-index: 2;
+            width: 90%;
+        }
 
-.crawl {
-    
-    font-size: 2rem;
-    text-align: center;
-    width: 60%;
-    max-width: 600px;
-    line-height: 1.6;
-    transform-origin: 50% 100%;
-    transform: rotateX(30deg); /* Maior inclinação para trás */
-    animation: crawlAnimation 60s linear 12s; /* Começa a subir após o título sumir */
-}
+        @keyframes introAnimation {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
 
-@keyframes crawlAnimation {
-    from { transform: rotateX(35deg) translateY(-10vh); 
-        margin-top: 0;    
-    }
-    to { transform: rotateX(35deg) translateY(-300vh); }
-}
+        /* Título */
+        .title-screen {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            text-align: center;
+            opacity: 0;
+            animation: titleAnimation 5s ease-out 5s;
+            text-shadow: 0 0 10px #ffe81f;
+            z-index: 2;
+            width: 90%;
+        }
 
-a {
-    color: yellow;
-    text-decoration: none;
-}
+        @keyframes titleAnimation {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Conteúdo principal - rolagem Star Wars */
+        .star-wars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            z-index: 3;
+            animation: crawlFadeIn 5s ease-out 10s forwards;
+            padding-bottom: 100px;
+        }
+
+        @keyframes crawlFadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .crawl {
+            font-size: 2rem;
+            text-align: center;
+            width: 60%;
+            max-width: 600px;
+            line-height: 1.6;
+            transform-origin: 50% 100%;
+            transform: rotateX(30deg);
+            animation: crawlAnimation 80s linear 12s forwards;
+            margin-top: 0;
+            padding-top: 150vh; /* Começa MUITO abaixo - invisível */
+            opacity: 1;
+        }
+
+        @keyframes crawlAnimation {
+            0% { 
+                transform: rotateX(35deg) translateY(100vh); /* Começa lá embaixo */
+                opacity: 1;
+            }
+            5% {
+                opacity: 1; /* Aparece rapidamente */
+            }
+            95% {
+                opacity: 1; /* Mantém visível quase até o fim */
+            }
+            100% { 
+                transform: rotateX(35deg) translateY(-300vh); /* Sobe e desaparece */
+                opacity: 0; /* Fica invisível no final */
+            }
+        }
+
+        /* Botão de download final - sem caixa */
+        .final-download-btn {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 50, 0, 0.9);
+            color: #4CAF50;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            z-index: 100;
+            display: none; /* Começa escondido */
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .final-download-btn:hover {
+            background-color: #4CAF50;
+            color: #000;
+            transform: translate(-50%, -50%) scale(1.1);
+            animation: none;
+        }
+
+        /* Links */
+        a {
+            color: #ffe81f;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #4bd5ee;
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 1200px) {
+            .crawl {
+                font-size: 1.8rem;
+                width: 70%;
+                padding-top: 130vh;
+            }
+            
+            .final-download-btn {
+                font-size: 1.4rem;
+                padding: 18px 35px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .crawl {
+                font-size: 1.6rem;
+                width: 75%;
+                padding-top: 120vh;
+            }
+            
+            .title-screen {
+                font-size: 3.5rem;
+            }
+            
+            .final-download-btn {
+                font-size: 1.3rem;
+                padding: 16px 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: row;
+                flex-wrap: wrap;
+                top: 10px;
+                left: 10px;
+                gap: 10px;
+            }
+            
+            .btn {
+                padding: 10px 15px;
+                font-size: 1rem;
+            }
+            
+            .intro-text {
+                font-size: 1.8rem;
+            }
+            
+            .title-screen {
+                font-size: 2.8rem;
+            }
+            
+            .crawl {
+                font-size: 1.5rem;
+                width: 85%;
+                padding-top: 110vh;
+            }
+            
+            .final-download-btn {
+                font-size: 1.2rem;
+                padding: 14px 25px;
+                max-width: 90%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .intro-text {
+                font-size: 1.5rem;
+            }
+            
+            .title-screen {
+                font-size: 2.2rem;
+            }
+            
+            .crawl {
+                font-size: 1.3rem;
+                width: 90%;
+                padding-top: 100vh;
+                line-height: 1.5;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .final-download-btn {
+                font-size: 1.1rem;
+                padding: 12px 20px;
+                max-width: 95%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .intro-text {
+                font-size: 1.3rem;
+            }
+            
+            .title-screen {
+                font-size: 1.8rem;
+            }
+            
+            .crawl {
+                font-size: 1.1rem;
+                width: 95%;
+                padding-top: 90vh;
+            }
+            
+            .final-download-btn {
+                font-size: 1rem;
+                padding: 10px 16px;
+            }
+        }
+
+        /* Melhorar a visibilidade do texto */
+        .crawl p {
+            margin-bottom: 20px;
+        }
+        
+        .crawl .title p {
+            margin-bottom: 15px;
+            font-size: 2.2rem;
+        }
+        
+        .crawl strong {
+            color: #4bd5ee;
+        }

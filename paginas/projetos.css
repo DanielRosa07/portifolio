@@ -96,6 +96,24 @@ body {
     text-decoration: underline;
 }
 
+/* Estilo geral da barra de rolagem */
+::-webkit-scrollbar {
+    width: 12px; /* Largura da barra */
+    height: 12px; /* Altura da barra (para rolagem horizontal) */
+  }
+  
+  /* Estilo do "thumb" (parte que desliza) */
+  ::-webkit-scrollbar-thumb {
+    background-color: #00008b5b; /* Azul escuro */
+
+
+  }
+  
+  /* Estilo do fundo da barra de rolagem */
+  ::-webkit-scrollbar-track {
+    background-color: #3e3cb9; /* Azul claro */
+
+  }
 
 /* ====== DESKTOP (acordeão horizontal) ====== */
 @media (min-width: 1024px) {

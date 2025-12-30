@@ -1,29 +1,31 @@
-*{
-  text-decoration: none;
+* {
+    text-decoration: none;
+    box-sizing: border-box;
 }
+
+/* =========================
+   DESKTOP (INALTERADO)
+========================= */
+
 body {
-    
-    background-color: #5451f8; /* Fundo roxo */
+    background-color: #5451f8;
     display: flex;
-    justify-content: flex-end; /* Alinha o conteúdo à direita */
+    justify-content: flex-end;
     align-items: center;
-   
     font-family: "Anton", sans-serif;
     margin-right: 40px;
-  overflow: hidden;
-
-  }
+    overflow: hidden;
+}
 
 .foto-wrapper {
-   
     width: 360px;
     height: 460px;
     border-radius: 25px;
-    overflow: hidden; /* AQUI o radius funciona */
+    overflow: hidden;
 }
 
 .foto-card {
-     margin-top: 70px;
+    margin-top: 70px;
     width: 90%;
     height: 90%;
     border-radius: 25px;
@@ -39,207 +41,114 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 25px;
     object-position: center 20px;
+    border-radius: 25px;
 }
 
-  .container {
-  
+.container {
     display: flex;
     flex-direction: column;
     margin: 20px;
-    gap: 20px; /* Espaçamento entre os itens */
-    
-    /* Perspectiva inicial e rotação */
-    transform: perspective(1000px) rotateY(-20deg) rotateX(0deg);
-    transform-origin: center; /* Ponto de rotação centralizado */
+    gap: 20px;
+    transform: perspective(1000px) rotateY(-20deg);
+    transform-origin: center;
     transition: transform 1s;
-  }
+    animation: fadeIn 1s ease-out forwards;
+}
 
-  h1 {
+h1 {
     letter-spacing: 10px;
     margin: 7px;
     font-size: 130px;
     height: 100px;
-    width: 500;
     color: rgb(24, 24, 24);
     cursor: pointer;
-
-    /* Contorno inicial */
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: rgba(0, 0, 0, 0);
-    transition: transform 1s, -webkit-text-stroke-width 0.5s;
     transition: 0.3s;
-  }
+}
 
-  h1:hover {
-    /* Contorno no hover */
-    -webkit-text-stroke-width: 1px; /* Aumenta a espessura */
-    -webkit-text-stroke-color: rgb(32, 32, 32); /* Altera a cor do contorno */
-    color: transparent; /* Deixa apenas o contorno visível */
-    transform: scale(1); /* Um leve efeito de zoom */
-    transform: scale(1) perspective(1000px) rotateY(12deg) rotateX(0deg);
-    transform-origin: center; /* Ponto de rotação centralizado */
-    transition: transform 0.3s;
-  }
-  .container div {
-    color: black;
- 
+h1:hover {
+    -webkit-text-stroke-color: rgb(32, 32, 32);
+    color: transparent;
+    transform: perspective(1000px) rotateY(12deg);
+}
+
+.container div {
     font-weight: bold;
     text-transform: uppercase;
-
-    /* Escala e inclinação padrão para os itens */
     transform: scale(1.2, 1) skewX(-5deg);
-  }
+}
 
-  .container div:nth-child(1) {
-    transform: scale(1.8, 1.3) skewX(-15deg); /* Texto mais esticado no topo */
-  }
+.container div:nth-child(1) {
+    transform: scale(1.8, 1.3) skewX(-15deg);
+}
 
-  .container div:nth-child(2) {
+.container div:nth-child(2) {
     transform: scale(1.6, 1.2) skewX(-10deg);
-  }
+}
 
-  .container div:nth-child(3) {
+.container div:nth-child(3) {
     transform: scale(1.4, 1.1) skewX(-5deg);
-  }
-
-  .container div:nth-child(4) {
-    transform: scale(1.2, 1) skewX(0deg); /* Texto menos esticado na base */
-  }
-
-  @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-.container{
-  animation: fadeIn 1s ease-out forwards;
 }
 
+.container div:nth-child(4) {
+    transform: scale(1.2, 1) skewX(0deg);
+}
 
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
-
-
-
-/* ------------------------ */
-/*      tela responsiva     */
-/* ------------------------ */
-
-
-
-
+/* =========================
+   MOBILE (CORRIGIDO)
+========================= */
 
 @media (max-width: 768px) {
 
     body {
-        justify-content: flex-start !important; /* puxa para a esquerda */
-        padding-left: 20px; /* aproxima */
-        overflow: visible;
-        margin: 0;
-    }
-
-    .container {
-        transform: scale(0.85) perspective(900px) rotateY(-20deg); 
         margin: 0;
         padding: 0;
-        gap: 25px; 
+        overflow-x: hidden;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
     }
 
-    h1 {
-        font-size: 75px !important; /* maior */
-        letter-spacing: 6px;
-    }
-     .foto-wrapper {
+    .foto-wrapper {
         width: 100%;
-        height: 190px;
-        border-radius: 0; /* banner reto */
+        height: 220px;
+        border-radius: 0;
         margin: 0;
     }
 
     .foto-card {
-        clip-path: none; /* REMOVE o corte inclinado */
-    }
-
-    .foto-card img {
-        object-position: center;
-    }
-}
-
-@media (max-width: 480px) {
-
-    body {
-        padding-left: 127px;
-    }
-
-    .container {
-        transform: scale(0.95) perspective(900px) rotateY(-20deg); 
-        gap: 30px;
-    }
-
-    h1 {
-        font-size: 50px !important;
-        letter-spacing: 0px;
-    }
-     .foto-wrapper {
         width: 100%;
-        height: 190px;
-        border-radius: 0; /* banner reto */
+        height: 100%;
         margin: 0;
-    }
-
-    .foto-card {
-        clip-path: none; /* REMOVE o corte inclinado */
+        clip-path: none;
+        border-radius: 0;
     }
 
     .foto-card img {
-        object-position: center;
-    }
-}
-
-/* MOBILE — imagem vira um header */
-@media (max-width: 768px) {
-
-    .header-img {
-        display: block;
-        width: 450px;
-        height: 190px;
-      
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-        margin: 20px auto 10px auto; /* centralizada */
-    }
-
-    body {
-        justify-content: flex-start !important;
-        padding-left: 0 !important;
-        flex-direction: column; /* coloca header em cima */
-    }
-
-    .container-fluid {
-        justify-content: center !important;
-        margin-top: 10px;
+        object-position: center 12%;
+        border-radius: 0;
     }
 
     .container {
-        transform: scale(0.9) perspective(900px) rotateY(-20deg);
-        margin-top: 10px;
-    }
-     .foto-wrapper {
-        width: 100%;
-        height: 230px;
-        border-radius: 0; /* banner reto */
-        margin: 0;
+        transform: scale(0.9);
+        margin-top: 20px;
+        align-items: center;
     }
 
-    .foto-card {
-        clip-path: none; /* REMOVE o corte inclinado */
-    }
-
-    .foto-card img {
-        object-position: center;
-        object-position: center -30px;
+    h1 {
+        font-size: 55px !important;
+        letter-spacing: 4px;
+        text-align: center;
+        height: auto;
     }
 }

@@ -15,7 +15,7 @@ body {
 
 /* Voltar */
 .link-voltar {
-    font-size: 28px;
+    font-size: 58px;
     color: white;
     text-decoration: none;
     margin-bottom: 20px;
@@ -117,6 +117,7 @@ body {
 
 /* ====== DESKTOP (acordeão horizontal) ====== */
 @media (min-width: 1024px) {
+
     .caixa-projetos {
         height: 550px;
         flex-direction: row;
@@ -183,12 +184,15 @@ body {
 
 /* ====== MOBILE (coluna vertical) ====== */
 @media (max-width: 1023px) {
+
+
+    
     .container-projetos {
         padding: 10px;
     }
     
     .link-voltar {
-        font-size: 24px;
+        font-size: 44px;
         margin-bottom: 15px;
     }
     

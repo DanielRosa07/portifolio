@@ -45,20 +45,18 @@ function startSequence() {
 
 // Pular introdução
 skipBtn.addEventListener('click', () => {
+    // Parar animações
     intro.style.display = 'none';
     titleScreen.style.display = 'none';
+
     crawlContainer.style.opacity = '1';
     crawlContainer.style.animation = 'none';
-    
-    // Iniciar animação imediatamente
+
     crawlText.style.animation = 'none';
-    void crawlText.offsetWidth;
-    crawlText.style.animation = 'crawlAnimation 80s linear forwards';
-    
-    // Mostrar botão mais cedo
-    setTimeout(() => {
-        finalDownloadBtn.style.display = 'flex';
-    }, 80000);
+    crawlText.style.transform = 'translateY(-100%)'; // força o fim do crawl
+
+    // Mostrar botão FINAL imediatamente
+    finalDownloadBtn.style.display = 'flex';
 });
 
 // Reiniciar

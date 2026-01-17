@@ -1,78 +1,80 @@
+:root {
+    --scale: clamp(0.8, 1vw + 0.5, 1.2);
+}
 * {
     text-decoration: none;
     box-sizing: border-box;
 }
 
 /* =========================
-   DESKTOP (INALTERADO)
+   DESKTOP (ATUALIZADO PARA 4K)
 ========================= */
 
 body {
     background-color: #5451f8;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    justify-content: center; /* Alterado para centralizar em telas largas */
+    align-items: flex-start; /* Mudado para flex-start para subir conteúdo */
     font-family: "Anton", sans-serif;
-    margin-right: 40px;
-    /* overflow: hidden; */
-    
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-top: clamp(10px, 3vh, 40px); /* Reduzido para subir mais */
 }
 
 .foto-wrapper {
-    width: 380px;
-    height: 380px;
+    width: clamp(280px, 30vw, 480px); /* Responsivo para 4K */
+    height: clamp(280px, 30vw, 480px);
     border-radius: 50%;
     overflow: hidden;
-      object-fit: cover; 
+    object-fit: cover;
     object-position: top;
-    border: 5px solid white;
-    margin-top: 70px;
-    margin-right: 7%;
+    border: clamp(3px, 0.3vw, 8px) solid white; /* Borda responsiva */
+    margin-right: clamp(20px, 5vw, 100px); /* Margem responsiva */
     z-index: 2;
+    position: relative;
+    margin-top: clamp(90px, 3vh, 30px); /* Reduzido para subir mais */
 }
 
 .foto-card {
-    
     width: 100%;
     height: 100%;
-
 }
 
 .foto-card img {
-    width: 120%;
-    height: 120%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     object-position: center 10%;
-   
 }
 
 .container {
     display: flex;
     flex-direction: column;
     margin: 20px;
-    gap: 30px;
+    gap: clamp(15px, 2vw, 40px); /* Gap responsivo */
     transform: perspective(1000px) rotateY(-20deg);
     transform-origin: center;
     transition: transform 1s;
     animation: fadeIn 1s ease-out forwards;
-    
+    margin-top: clamp(15px, 5vh, 50px); /* Reduzido para subir mais */
 }
 
 h1 {
-    letter-spacing: 10px;
-    margin: 7px;
-    font-size: 100px;
-    height: 100px;
+    letter-spacing: clamp(4px, 1vw, 10px); /* Responsivo */
+    margin: clamp(4px, 0.7vw, 7px);
+    font-size: clamp(40px, 8vw, 100px);
+    height: clamp(40px, 8vw, 100px);
     color: rgb(255, 255, 255);
     cursor: pointer;
-    -webkit-text-stroke-width: 2.5px;
+    -webkit-text-stroke-width: clamp(1px, 0.25vw, 2.5px);
     -webkit-text-stroke-color: #5451f8fa;
     transition: 0.3s;
     text-decoration: none;
 }
 
 h1:hover {
-     -webkit-text-stroke-width: 0.1px;
+    -webkit-text-stroke-width: 0.1px;
     -webkit-text-stroke-color: rgb(255, 255, 255);
     color: transparent;
     transform: perspective(1000px) rotateY(12deg);
@@ -82,6 +84,7 @@ h1:hover {
     font-weight: bold;
     text-transform: uppercase;
     transform: scale(1.2, 1) skewX(-5deg);
+    font-size: clamp(16px, 2vw, 32px); /* Font-size responsivo */
 }
 
 .container div:nth-child(1) {
@@ -106,59 +109,131 @@ h1:hover {
 }
 
 /* =========================
-   MOBILE (CORRIGIDO)
+   MEDIA QUERIES ESPECÍFICAS PARA 4K
+========================= */
+
+/* Para telas MUITO grandes (4K e acima) */
+@media (min-width: 2560px) {
+    body {
+        justify-content: space-evenly;
+        padding: 0 10%;
+        padding-top: 20px; /* Reduzido para subir mais */
+    }
+    
+    .foto-wrapper {
+        width: min(500px, 20vw);
+        height: min(500px, 20vw);
+        margin-right: min(150px, 10vw);
+        margin-top: 15px; /* Reduzido para subir mais */
+    }
+    
+    .container {
+        gap: min(50px, 3vw);
+        margin-top: 20px; /* Reduzido para subir mais */
+    }
+    
+    h1 {
+        font-size: min(160px, 8vw);
+    }
+}
+
+/* Para telas grandes mas não 4K (1920px - 2559px) */
+@media (min-width: 1920px) and (max-width: 2559px) {
+    body {
+        justify-content: center;
+        padding: 0 5%;
+        padding-top: 15px; /* Reduzido para subir mais */
+    }
+    
+    .foto-wrapper {
+        width: 380px;
+        height: 380px;
+        margin-right: 80px;
+        margin-top: 10px; /* Reduzido para subir mais */
+    }
+    
+    .container {
+        margin-top: 15px; /* Reduzido para subir mais */
+    }
+}
+
+/* =========================
+   MOBILE (ATUALIZADO)
 ========================= */
 
 @media (max-width: 768px) {
-
     body {
         margin: 0;
-        padding: 0;
+        padding: 5px 15px; /* Reduzido padding */
         overflow-x: hidden;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
+        min-height: auto;
+        padding-top: 5px; /* Menos espaço no topo mobile */
     }
 
     .foto-wrapper {
-        width: 270px;
-        height: 270px;
-        border-radius: 0;
-        margin: 0;
-        margin-top: 15px;
-        border: 0px;
+        width: min(250px, 70vw); /* Um pouco menor */
+        height: min(250px, 70vw);
+        border-radius: 50%;
+        margin: 5px 0; /* Reduzido margin */
+        border: 3px solid white;
     }
 
     .foto-card {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        clip-path: none;
         border-radius: 50%;
-        
-
     }
 
     .foto-card img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center 12%;
-         border-radius: 50%; 
-         border: 3px solid white;
+        border-radius: 50%;
+        border: 3px solid white;
     }
 
     .container {
-        transform: scale(0.9);
-        margin-top: 20px;
+        transform: none;
+        margin-top: 5px; /* Subido no mobile */
         align-items: center;
+        width: 100%;
+        gap: 10px;
     }
 
     h1 {
-        font-size: 55px !important;
-        letter-spacing: 4px;
+        font-size: clamp(35px, 10vw, 55px) !important;
+        letter-spacing: 2px;
         text-align: center;
         height: auto;
-        -webkit-text-stroke-color: #5451f800;
+        -webkit-text-stroke-color: #5451f8;
+        line-height: 1.2;
+        margin: 3px; /* Reduzido margin do h2 */
+    }
+    
+    .container div {
+        font-size: clamp(14px, 4vw, 20px);
+        text-align: center;
+    }
+}
+
+/* Para telas muito pequenas (iPhone SE, etc) */
+@media (max-width: 375px) {
+    body {
+        padding: 0 10px;
+        padding-top: 0; /* Sem padding no topo */
+    }
+    
+    .foto-wrapper {
+        width: 220px;
+        height: 220px;
+        margin: 0;
+    }
+    
+    h2 {
+        font-size: 35px !important;
+        margin: 2px;
+    }
+    
+    .container {
+        margin-top: 0;
+        gap: 8px;
     }
 }
